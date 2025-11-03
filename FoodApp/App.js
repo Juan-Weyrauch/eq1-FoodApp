@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { View, Text, Button, StyleSheet, ScrollView } from "react-native";
 import Carrito from "./Componentes/carrito";
 import ListaProductos from "./Componentes/listaproducto";
+import Boton from "./Componentes/boton";
 import { addProducto, getProductos } from "./Servicios/servicioProducto";
 
 function App() {
