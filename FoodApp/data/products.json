@@ -1,0 +1,10 @@
+{
+    "products": [
+      { "id": "burger", "name": "Hamburguesa", "price": 100, "stock": 10, "emoji": "🍔" },
+      { "id": "taco", "name": "Taco", "price": 50, "stock": 10, "emoji": "🌮" },
+      { "id": "hotdog", "name": "Pancho", "price": 70, "stock": 2, "emoji": "🌭" },
+      { "id": "shake", "name": "Milkshake", "price": 80, "stock": 0, "emoji": "🥤" },
+      { "id": "fries", "name": "Papas", "price": 100, "stock": 20, "emoji": "🍟" },
+      { "id": "ramen", "name": "Ramen", "price": 120, "stock": 7, "emoji": "🍜" }
+    ]
+  }
