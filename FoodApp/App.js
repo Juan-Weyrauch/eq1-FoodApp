@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import Boton from "./Componentes/Boton";
-import Carrito from "./Componentes/Carrito";
-import ListaProductos from "./Componentes/ListaProductos";
+import { View, Text, Button, StyleSheet, ScrollView } from "react-native";
+import Carrito from "./Componentes/carrito";
+import ListaProductos from "./Componentes/listaproducto";
 import { addProducto, getProductos } from "./Servicios/servicioProducto";
-import Producto from "./Componentes/producto";
-import "./styles.css";
 
 function App() {
   const [productos, setProductos] = useState([]);
@@ -56,14 +54,22 @@ function App() {
   };
 
   return (
-    <div>
-      <h1>Food App</h1>
-      <button onClick={() => setBoton(true)}>Agregar nueva comida</button>
+    <View style={styles.screen}>
+      <Text style={styles.h1}>Food App</Text>
 
-      <div className="container">
-        <ListaProductos productos={productos} addToCarrito={addToCarrito} />
-        <Carrito carrito={carrito} removeFromCarrito={removeFromCarrito} />
-      </div>
+      <View style={styles.actions}>
+        <Button title="Agregar nueva comida" onPress={() => setBoton(true)} />
+      </View>
+
+      <View style={styles.container}>
+        <ScrollView style={styles.left} contentContainerStyle={styles.listContent}>
+          <ListaProductos productos={productos} addToCarrito={addToCarrito} />
+        </ScrollView>
+
+        <View style={styles.right}>
+          <Carrito carrito={carrito} removeFromCarrito={removeFromCarrito} />
+        </View>
+      </View>
 
       {boton && (
         <Boton
@@ -71,8 +77,42 @@ function App() {
           cancelar={() => setBoton(false)}
         />
       )}
-    </div>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    paddingTop: 24,
+    paddingHorizontal: 16,
+    backgroundColor: "#fff",
+  },
+  h1: {
+    fontSize: 28,
+    fontWeight: "700",
+    marginBottom: 12,
+    color: "#222",
+  },
+  actions: {
+    marginBottom: 12,
+    alignSelf: "flex-start",
+  },
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    gap: 16, // RN 0.71+ soporta gap; si no, usar margin
+  },
+  left: {
+    flex: 2,
+  },
+  listContent: {
+    paddingRight: 8,
+    paddingBottom: 24,
+  },
+  right: {
+    flex: 1,
+  },
+});
 
 export default App;
