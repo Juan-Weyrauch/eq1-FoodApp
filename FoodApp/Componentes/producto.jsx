@@ -10,20 +10,22 @@ export default function Producto({ producto, addToCarrito }) {
       onPress={() => !sinStock && addToCarrito(producto.id)}
       disabled={sinStock}
     >
-      <View>
+      <View style={styles.header}>
+        <Text style={styles.emoji}>{producto.emoji}</Text>
         <Text style={styles.nombre}>{producto.name}</Text>
-        <Text style={styles.stock}>
-          {sinStock ? "No stock" : `Stock: ${producto.stock}`}
-        </Text>
-        <Text style={styles.precio}>💲{producto.price}</Text>
       </View>
+
+      <Text style={styles.stock}>
+        {sinStock ? "No stock" : `Stock: ${producto.stock}`}
+      </Text>
+      <Text style={styles.precio}>💲{producto.price}</Text>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   producto: {
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#fffaf0",
     padding: 16,
     margin: 8,
     borderRadius: 10,
@@ -32,6 +34,16 @@ const styles = StyleSheet.create({
   },
   disabled: {
     opacity: 0.4,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 8,
+  },
+  emoji: {
+    fontSize: 28,
+    marginRight: 6,
   },
   nombre: {
     fontSize: 22,
