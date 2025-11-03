@@ -3,6 +3,7 @@ import Boton from "./Componentes/Boton";
 import Carrito from "./Componentes/Carrito";
 import ListaProductos from "./Componentes/ListaProductos";
 import { addProducto, getProductos } from "./Servicios/servicioProducto";
+import Producto from "./Componentes/producto";
 import "./styles.css";
 
 function App() {
