@@ -1,4 +1,3 @@
-import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 export default function Producto({ producto, addToCarrito }) {
@@ -10,7 +9,7 @@ export default function Producto({ producto, addToCarrito }) {
       onPress={() => !sinStock && addToCarrito(producto.id)}
       disabled={sinStock}
     >
-      <View>
+      <View style={styles.infoContainer}>
         <Text style={styles.nombre}>{producto.name}</Text>
         <Text style={styles.stock}>
           {sinStock ? "No stock" : `Stock: ${producto.stock}`}
@@ -23,27 +22,32 @@ export default function Producto({ producto, addToCarrito }) {
 
 const styles = StyleSheet.create({
   producto: {
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#b0aeaeff",
     padding: 16,
-    margin: 8,
+    marginVertical: 8,
     borderRadius: 10,
-    alignItems: "center",
-    elevation: 3,
   },
   disabled: {
     opacity: 0.4,
   },
+  infoContainer: {
+    alignItems: "center", 
+    justifyContent: "center", 
+  },
   nombre: {
     fontSize: 22,
     fontWeight: "bold",
+    textAlign: "center",
   },
   stock: {
     fontSize: 16,
     color: "#555",
+    textAlign: "center",
   },
   precio: {
     fontSize: 18,
     color: "green",
     marginTop: 4,
+    textAlign: "center",
   },
 });

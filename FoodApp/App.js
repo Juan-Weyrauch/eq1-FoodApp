@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { Button, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useEffect, useState } from "react";
 import HomeScreen from "./Componentes/Screens/HomeScreen.jsx";
 import CartScreen from "./Componentes/Screens/CartScreen.jsx";
 import { addProducto, getProductos } from "./Servicios/servicioProducto";
 
-const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [productos, setProductos] = useState([]);
@@ -58,8 +59,23 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home">
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          options={({ navigation }) => ({
+            title: "Home",
+            headerStyle: { backgroundColor: "red" },
+            headerTintColor: "black",
+            headerTitleStyle: { fontWeight: "bold" },
+            headerRight: () => (
+              <Button 
+                style={styles.Button}
+                title="🛒"
+                onPress={() => navigation.navigate("Cart")}
+              />
+            ),
+          })}
+        >
           {() => (
             <HomeScreen
               productos={productos}
@@ -69,17 +85,26 @@ export default function App() {
               botonAgregarProducto={botonAgregarProducto}
             />
           )}
-        </Tab.Screen>
+        </Stack.Screen>
 
-        <Tab.Screen name="Cart">
+        <Stack.Screen
+          name="Cart"
+          options={{ title: "Carrito" }}
+        >
           {() => (
             <CartScreen
               carrito={carrito}
               removeFromCarrito={removeFromCarrito}
             />
           )}
-        </Tab.Screen>
-      </Tab.Navigator>
+        </Stack.Screen>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  Button: {
+    backgroundColor: "transparent",
+  }
+})

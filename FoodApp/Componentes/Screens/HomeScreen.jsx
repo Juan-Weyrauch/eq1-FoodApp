@@ -1,6 +1,7 @@
 import { View, ScrollView, Button, Text, StyleSheet } from "react-native";
 import ListaProductos from "../listaproducto";
 import Boton from "../boton";
+import { useNavigation } from "@react-navigation/native";
 
 export default function HomeScreen({
   productos,
@@ -9,11 +10,11 @@ export default function HomeScreen({
   setBoton,
   botonAgregarProducto,
 }) {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.screen}>
       <Text style={styles.h1}>Food App</Text>
-
-      <Button title="Agregar nueva comida" onPress={() => setBoton(true)} />
 
       <ScrollView contentContainerStyle={styles.listContent}>
         <ListaProductos productos={productos} addToCarrito={addToCarrito} />
@@ -25,6 +26,7 @@ export default function HomeScreen({
           cancelar={() => setBoton(false)}
         />
       )}
+      <Button title="Agregar nueva comida" onPress={() => setBoton(true)} />
     </View>
   );
 }
@@ -42,5 +44,5 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingBottom: 24,
-  },
+  }
 });
