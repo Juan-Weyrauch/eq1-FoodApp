@@ -1,4 +1,3 @@
-import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 export default function Producto({ producto, addToCarrito }) {
@@ -37,7 +36,7 @@ const styles = StyleSheet.create({
   producto: {
     backgroundColor: "#fffaf0",
     padding: 16,
-    margin: 8,
+    marginVertical: 8,
     borderRadius: 10,
     alignItems: "center",
     elevation: 3,
@@ -69,10 +68,12 @@ const styles = StyleSheet.create({
   stock: {
     fontSize: 16,
     color: "#555",
+    textAlign: "center",
   },
   precio: {
     fontSize: 18,
     color: "green",
     marginTop: 4,
+    textAlign: "center",
   },
 });
