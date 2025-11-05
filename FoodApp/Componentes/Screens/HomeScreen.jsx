@@ -1,33 +1,19 @@
 import { View, ScrollView, Button, Text, StyleSheet } from "react-native";
 import ListaProductos from "../listaproducto";
 import Boton from "../boton";
-import { useNavigation } from "@react-navigation/native";
+import { useCart } from "../../context/cartContext";
 
-export default function HomeScreen({
-  productos,
-  addToCarrito,
-  boton,
-  setBoton,
-  botonAgregarProducto,
-}) {
-  const navigation = useNavigation();
+export default function HomeScreen() {
+  const { products, addToCart } = useCart(); 
 
   return (
     <View style={styles.screen}>
       <Text style={styles.h1}>🍴 Menú de Productos</Text>
       <View style={styles.card}>
         <ScrollView contentContainerStyle={styles.listContent}>
-          <ListaProductos productos={productos} addToCarrito={addToCarrito} />
+          <ListaProductos productos={products} addToCarrito={addToCart} />
         </ScrollView>
       </View>
-
-      {boton && (
-        <Boton
-          guardar={botonAgregarProducto}
-          cancelar={() => setBoton(false)}
-        />
-      )}
-
       <View style={styles.cta}>
         <Button title="AGREGAR NUEVA COMIDA" onPress={() => setBoton(true)} />
       </View>

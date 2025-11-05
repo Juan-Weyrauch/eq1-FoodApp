@@ -1,12 +1,15 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Producto from "./producto";
+import { useCart } from "../context/cartContext";
 
-export default function ListaProductos({ productos, addToCarrito }) {
+export default function ListaProductos() {
+  const { products, addToCart } = useCart();
+
   return (
     <View style={styles.container}>
       <View style={styles.grid}>
-        {productos.map((p) => (
-          <Producto key={p.id} producto={p} addToCarrito={addToCarrito} />
+        {products.map((p) => (
+          <Producto key={p.id} producto={p} addToCarrito={addToCart} />
         ))}
       </View>
     </View>

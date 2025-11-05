@@ -1,19 +1,21 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { useCart } from "../context/cartContext";
 
-export default function Producto({ producto, addToCarrito }) {
+export default function Producto({ producto }) {
+  const { addToCart } = useCart(); 
+
   const sinStock = producto.stock === 0;
 
   return (
     <TouchableOpacity
       style={[styles.card, sinStock && styles.disabled]}
-      onPress={() => !sinStock && addToCarrito(producto.id)}
+      onPress={() => !sinStock && addToCart(producto.id)}
       disabled={sinStock}
       activeOpacity={0.8}
     >
       <View style={styles.center}>
         <Text style={styles.emoji}>{producto.emoji}</Text>
       </View>
-
       <View style={styles.info}>
         <Text style={styles.price}>${producto.price}</Text>
         <Text style={styles.stock}>
