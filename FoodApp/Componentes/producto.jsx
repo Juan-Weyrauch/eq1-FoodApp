@@ -5,75 +5,52 @@ export default function Producto({ producto, addToCarrito }) {
 
   return (
     <TouchableOpacity
-      style={[styles.producto, sinStock && styles.disabled]}
+      style={[styles.card, sinStock && styles.disabled]}
       onPress={() => !sinStock && addToCarrito(producto.id)}
       disabled={sinStock}
+      activeOpacity={0.8}
     >
-      <View style={styles.header}>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text style={styles.emoji}>{producto.emoji}</Text>
-          <Text style={styles.nombre} numberOfLines={2} adjustsFontSizeToFit>
-            {producto.name}
-          </Text>
-        </View>
+      <View style={styles.center}>
+        <Text style={styles.emoji}>{producto.emoji}</Text>
       </View>
 
-      <Text style={styles.stock}>
-        {sinStock ? "No stock" : `Stock: ${producto.stock}`}
-      </Text>
-      <Text style={styles.precio}>💲{producto.price}</Text>
+      <View style={styles.info}>
+        <Text style={styles.price}>${producto.price}</Text>
+        <Text style={styles.stock}>
+          {sinStock ? "Stock: 0" : `Stock: ${producto.stock}`}
+        </Text>
+      </View>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  producto: {
-    backgroundColor: "#fffaf0",
-    padding: 16,
-    marginVertical: 8,
-    borderRadius: 10,
+  card: {
+    width: "20%",                 
+    aspectRatio: 1,            
+    backgroundColor: "#fff",
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    paddingVertical: 10,          
+    paddingHorizontal: 12,
+    marginBottom: 14,
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 2,
+    justifyContent: "space-around",
     alignItems: "center",
-    elevation: 3,
-    width: "45%", // Takes up slightly less than half to account for margins
-    aspectRatio: 1, // Makes it a perfect square
-  },
+  },  
   disabled: {
-    opacity: 0.4,
+    backgroundColor: "#f3f3f3",
+    borderColor: "#ececec",
+    opacity: 0.7,
   },
-  header: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "center",
-    marginBottom: 8,
-    flexWrap: "wrap",
-  },
-  emoji: {
-    fontSize: 24,
-    marginRight: 4,
-  },
-  nombre: {
-    fontSize: 18,
-    fontWeight: "bold",
-    flexShrink: 1,
-    textAlign: "center",
-    flexWrap: "wrap",
-  },
-  stock: {
-    fontSize: 16,
-    color: "#555",
-    textAlign: "center",
-  },
-  precio: {
-    fontSize: 18,
-    color: "green",
-    marginTop: 4,
-    textAlign: "center",
-  },
+  center: { alignItems: "center", justifyContent: "center" },
+  emoji: { fontSize: 56 },
+  info: { alignItems: "center" },
+  price: { fontSize: 28, fontWeight: "700", marginTop: 8 },
+  stock: { fontSize: 18, color: "#444", marginTop: 4 },
 });
