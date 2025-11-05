@@ -1,10 +1,17 @@
 import { View, StyleSheet } from "react-native";
 import Carrito from "../carrito.jsx";
+import { useCart } from "../../context/cartContext";
 
-export default function CartScreen({ carrito, removeFromCarrito }) {
+export default function CartScreen() {
+  const { cartItems, removeFromCart, total } = useCart();
+
   return (
     <View style={styles.screen}>
-      <Carrito carrito={carrito} removeFromCarrito={removeFromCarrito} />
+      <Carrito
+        carrito={cartItems}
+        total={total}
+        removeFromCarrito={removeFromCart}
+      />
     </View>
   );
 }
