@@ -1,13 +1,37 @@
 import { StyleSheet, TouchableOpacity, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import HomeScreen from "./Componentes/Screens/HomeScreen.jsx";
 import CartScreen from "./Componentes/Screens/CartScreen.jsx";
-import { CartProvider } from "./context/cartContext";  // ← contexto
+import { CartProvider } from "./context/cartContext";
+import ListaProductos from "./Componentes/listaProductos";
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
 const PRIMARY = "#1E88E5";
+
+
+function ProductosTabs() {
+  return (
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen name="Comidas">
+        {() => <ListaProductos categoria="comidas" />}
+      </Tab.Screen>
+      <Tab.Screen name="Meriendas">
+        {() => <ListaProductos categoria="meriendas" />}
+      </Tab.Screen>
+      <Tab.Screen name="Bebidas">
+        {() => <ListaProductos categoria="bebidas" />}
+      </Tab.Screen>
+      <Tab.Screen name="Postres">
+        {() => <ListaProductos categoria="postres" />}
+      </Tab.Screen>
+    </Tab.Navigator>
+  );
+}
 
 export default function App() {
   return (
@@ -16,7 +40,8 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen
             name="Home"
-            component={HomeScreen}                 
+            // component={HomeScreen}
+            component={ProductosTabs}
             options={({ navigation }) => ({
               title: "Home",
               headerStyle: { backgroundColor: PRIMARY },
@@ -36,7 +61,7 @@ export default function App() {
 
           <Stack.Screen
             name="Cart"
-            component={CartScreen}                 // ← sin props
+            component={CartScreen}
             options={{ title: "Carrito" }}
           />
         </Stack.Navigator>
