@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./Componentes/Screens/HomeScreen.jsx";
 import CartScreen from "./Componentes/Screens/CartScreen.jsx";
 import { CartProvider } from "./context/cartContext";
-import ListaProductos from "./Componentes/listaProductos";
+import ListaProductos from "./Componentes/listaproducto";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -18,7 +18,7 @@ function ProductosTabs() {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen name="Comidas">
-        {() => <ListaProductos categoria="comidas" />}
+        {() => <ListaProductos categoria="comida" />}
       </Tab.Screen>
       <Tab.Screen name="Meriendas">
         {() => <ListaProductos categoria="meriendas" />}
@@ -28,6 +28,9 @@ function ProductosTabs() {
       </Tab.Screen>
       <Tab.Screen name="Postres">
         {() => <ListaProductos categoria="postres" />}
+      </Tab.Screen>
+      <Tab.Screen name="Todos">
+        {() => <ListaProductos />}
       </Tab.Screen>
     </Tab.Navigator>
   );
