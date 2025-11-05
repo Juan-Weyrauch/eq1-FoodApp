@@ -1,35 +1,39 @@
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import Producto from "./producto";
-import { useCart } from "../context/cartContext";
 
-export default function ListaProductos() {
-  const { products, addToCart } = useCart();
 
+export default function ListaProductos({ productos, addToCarrito }) {
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.titulo}>🍴 Menú de Productos</Text>
+
       <View style={styles.grid}>
-        {products.map((p) => (
-          <Producto key={p.id} producto={p} addToCarrito={addToCart} />
+        {productos.map((p) => (
+          <Producto key={p.id} producto={p} addToCarrito={addToCarrito} />
         ))}
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
+    backgroundColor: "#f2f2f2",
+    padding: 16,
+    paddingBottom: 40,
   },
   titulo: {
-    fontSize: 20,
-    fontWeight: "600",
+    fontSize: 26,
+    fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 12,
-    color: "#444",
+    marginBottom: 20,
+    color: "#222",
   },
   grid: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
+    width: "100%",
   },
 });
