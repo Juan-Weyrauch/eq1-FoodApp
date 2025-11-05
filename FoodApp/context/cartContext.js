@@ -12,6 +12,7 @@ import React, {
   export function CartProvider({ children }) {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState({}); // { id: cantidad }
+    const [userName, setUserName] = useState("");
   
     useEffect(() => {
       getProductos().then(setProducts).catch(console.error);
@@ -71,6 +72,8 @@ import React, {
           removeFromCart,
           cartItems,
           total,
+          userName,
+          setUserName,
         }}
       >
         {children}

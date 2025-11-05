@@ -7,6 +7,7 @@ import HomeScreen from "./Componentes/Screens/HomeScreen.jsx";
 import CartScreen from "./Componentes/Screens/CartScreen.jsx";
 import { CartProvider } from "./context/cartContext";
 import ListaProductos from "./Componentes/listaproducto";
+import Landing from "./Componentes/Screens/LandingScreen.jsx";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -40,13 +41,19 @@ export default function App() {
   return (
     <CartProvider>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="Landing">
+          <Stack.Screen
+            name="Landing"
+            component={Landing}
+            options={{ headerShown: false }}
+          />
+
           <Stack.Screen
             name="Home"
             // component={HomeScreen}
             component={ProductosTabs}
             options={({ navigation }) => ({
-              title: "Home",
+              title: "FoodApp",
               headerStyle: { backgroundColor: PRIMARY },
               headerTintColor: "#fff",
               headerTitleStyle: { fontWeight: "bold", color: "#fff" },
