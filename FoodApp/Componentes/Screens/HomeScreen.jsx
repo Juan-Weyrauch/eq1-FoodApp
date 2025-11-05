@@ -1,40 +1,67 @@
-import { View, ScrollView, Button, Text, StyleSheet } from "react-native";
-import { useLayoutEffect } from "react";
+import React, { useLayoutEffect } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
-import ListaProductos from "../listaproducto";
-import Boton from "../boton";
 import { useCart } from "../../context/cartContext";
+import ListaProductos from "../listaproducto";
+
+const Tab = createBottomTabNavigator();
+const PRIMARY = "#1E88E5";
 
 export default function HomeScreen() {
-  const { products, addToCart, userName } = useCart();
+  const { userName } = useCart();
   const navigation = useNavigation();
 
   useLayoutEffect(() => {
     if (userName) {
       navigation.setOptions({
-        title: `FoodApp`,
+        title: "FoodApp",
       });
     }
   }, [navigation, userName]);
 
   return (
     <View style={styles.screen}>
-      <Text style={styles.userName}>
+      <Text style={styles.h1}>
         Bienvenido, {userName || "Invitado"} 👋
       </Text>
 
-      <Text style={styles.h1}>🍴 Menú de Productos</Text>
-
-      <View style={styles.card}>
-        <ScrollView contentContainerStyle={styles.listContent}>
-          <ListaProductos productos={products} addToCarrito={addToCart} />
-        </ScrollView>
-      </View>
-
-      <View style={styles.cta}>
-        <Button title="AGREGAR NUEVA COMIDA" onPress={() => setBoton(true)} />
+      {/* Tabs go here */}
+      <View style={styles.tabsContainer}>
+        <ProductosTabs />
       </View>
     </View>
+  );
+}
+
+function ProductosTabs() {
+  const { addToCart } = useCart();
+
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: PRIMARY,
+        tabBarStyle: { backgroundColor: "#fff" },
+        tabBarLabelStyle: { fontSize: 10, fontWeight: "600" },
+      }}
+    >
+      <Tab.Screen name="Comidas">
+        {() => <ListaProductos categoria="comida" addToCarrito={addToCart} />}
+      </Tab.Screen>
+      <Tab.Screen name="Meriendas">
+        {() => <ListaProductos categoria="meriendas" addToCarrito={addToCart} />}
+      </Tab.Screen>
+      <Tab.Screen name="Bebidas">
+        {() => <ListaProductos categoria="bebidas" addToCarrito={addToCart} />}
+      </Tab.Screen>
+      <Tab.Screen name="Postres">
+        {() => <ListaProductos categoria="postres" addToCarrito={addToCart} />}
+      </Tab.Screen>
+      <Tab.Screen name="Todos">
+        {() => <ListaProductos addToCarrito={addToCart} />}
+      </Tab.Screen>
+    </Tab.Navigator>
   );
 }
 
@@ -51,26 +78,20 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginVertical: 12,
   },
-  card: {
-    flex: 1,
-    backgroundColor: "#fff",
-    borderRadius: 18,
-    padding: 16,
-    shadowColor: "#000",
-    shadowOpacity: 0.08,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 6,
-  },
-  listContent: {
-    paddingBottom: 24,
-  },
-  cta: {
-    marginTop: 12,
-  },
-  userName: {
-    color: "#fff",
-    fontSize: 18,
+  subtitle: {
+    color: "#ccc",
+    fontSize: 16,
     textAlign: "center",
+    marginBottom: 10,
+  },
+  tabsContainer: {
+    flex: 1,
+    overflow: "hidden",
+    borderRadius: 18,
+    marginTop: 10,
+    paddingBottom: 10,
+    backgroundColor: "#fff",
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 6,
   },
 });
