@@ -14,12 +14,11 @@ export default function HomeScreen({
 
   return (
     <View style={styles.screen}>
-      <Text style={styles.h1}>🍴 Menú de Productos</Text>
-      <View style={styles.card}>
-        <ScrollView contentContainerStyle={styles.listContent}>
-          <ListaProductos productos={productos} addToCarrito={addToCarrito} />
-        </ScrollView>
-      </View>
+      <Text style={styles.h1}>Food App</Text>
+
+      <ScrollView contentContainerStyle={styles.listContent}>
+        <ListaProductos productos={productos} addToCarrito={addToCarrito} />
+      </ScrollView>
 
       {boton && (
         <Boton
@@ -27,10 +26,7 @@ export default function HomeScreen({
           cancelar={() => setBoton(false)}
         />
       )}
-
-      <View style={styles.cta}>
-        <Button title="AGREGAR NUEVA COMIDA" onPress={() => setBoton(true)} />
-      </View>
+      <Button title="Agregar nueva comida" onPress={() => setBoton(true)} />
     </View>
   );
 }
@@ -38,31 +34,15 @@ export default function HomeScreen({
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "#111",      
     padding: 16,
+    backgroundColor: "#fff",
   },
   h1: {
-    fontSize: 26,
+    fontSize: 28,
     fontWeight: "700",
-    color: "#fff",
-    textAlign: "center",
-    marginVertical: 12,
-  },
-  card: {
-    flex: 1,
-    backgroundColor: "#fff",
-    borderRadius: 18,
-    padding: 16,
-    shadowColor: "#000",
-    shadowOpacity: 0.08,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 6,
+    marginBottom: 12,
   },
   listContent: {
     paddingBottom: 24,
-  },
-  cta: {
-    marginTop: 12,
-  },
+  }
 });
