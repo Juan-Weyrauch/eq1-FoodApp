@@ -8,7 +8,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.screen}>
-      <Text style={styles.h1}>🍴 Menú de Productos</Text>
+      <Text style={styles.h1}>Bienvenido (nombre)</Text> {/* !!! DEBERIA IR EL NOMBRE DEL USUARIO !!!*/}
       <View style={styles.card}>
         <ScrollView contentContainerStyle={styles.listContent}>
           <ListaProductos productos={products} addToCarrito={addToCart} />

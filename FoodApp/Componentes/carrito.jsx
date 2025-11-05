@@ -1,12 +1,8 @@
 import { Text, StyleSheet, View, Pressable } from "react-native";
 
-export default function Carrito({ carrito = [], removeFromCarrito, total }) {
-  const computedTotal =
-    total ??
-    carrito.reduce(
-      (a, i) => a + (i.lineTotal ?? (i.price || 0) * (i.qty || 0)),
-      0
-    );
+
+export default function Carrito({ carrito, removeFromCarrito }) {
+  const total = carrito.reduce((a, i) => a + i.price * i.q, 0);
 
   return (
     <View style={styles.carrito}>
@@ -16,23 +12,21 @@ export default function Carrito({ carrito = [], removeFromCarrito, total }) {
           <Text style={styles.p}>Carrito vacío</Text>
         ) : (
           carrito.map((item) => (
-            <View key={item.id} style={styles.row}>
+            <View key={item.id} style={styles.cartItems}>
               <Text style={styles.span}>
-                {item.emoji ?? "🧺"} {item.name} x {item.qty}
+                {item.emoji} {item.name}   x {item.q} {/* No se pq no funciona el item.emoji */}
               </Text>
               <Pressable
                 style={styles.remove}
                 onPress={() => removeFromCarrito(item.id)}
               >
-                <Text style={styles.priceText}>
-                  ${item.lineTotal ?? (item.price || 0) * (item.qty || 0)} ❌
-                </Text>
+                <Text>${item.price * item.q}   ❌</Text>
               </Pressable>
             </View>
           ))
         )}
       </View>
-      <Text style={styles.h3}>Total: ${computedTotal}</Text>
+      <Text style={styles.h3}>Total: ${total}</Text>
     </View>
   );
 }
@@ -58,16 +52,14 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   cartItems: {
-    width: "100%",
-    marginBottom: 12,
-  },
-  row: {
     flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "space-between",
-    marginBottom: 6,
+    width: "100%",
   },
   p: {
     fontSize: 16,
+    lineHeight: 22,
     color: "#333",
     marginBottom: 8,
   },
@@ -78,8 +70,8 @@ const styles = StyleSheet.create({
   remove: {
     backgroundColor: "transparent",
     borderWidth: 0,
-  },
-  priceText: {
-    color: "#111",
+    padding: 4,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
