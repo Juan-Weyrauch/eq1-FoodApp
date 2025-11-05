@@ -16,7 +16,7 @@ export default function Carrito({ carrito = [], removeFromCarrito, total }) {
           <Text style={styles.p}>Carrito vacío</Text>
         ) : (
           carrito.map((item) => (
-            <View key={item.id} style={styles.row}>
+            <View key={item.id} style={styles.cartItems}>
               <Text style={styles.span}>
                 {item.emoji ?? "🧺"} {item.name} x {item.qty}
               </Text>
@@ -36,6 +36,7 @@ export default function Carrito({ carrito = [], removeFromCarrito, total }) {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   h2: {
@@ -58,16 +59,14 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   cartItems: {
-    width: "100%",
-    marginBottom: 12,
-  },
-  row: {
     flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "space-between",
-    marginBottom: 6,
+    width: "100%",
   },
   p: {
     fontSize: 16,
+    lineHeight: 22,
     color: "#333",
     marginBottom: 8,
   },
@@ -78,8 +77,8 @@ const styles = StyleSheet.create({
   remove: {
     backgroundColor: "transparent",
     borderWidth: 0,
-  },
-  priceText: {
-    color: "#111",
+    padding: 4,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
