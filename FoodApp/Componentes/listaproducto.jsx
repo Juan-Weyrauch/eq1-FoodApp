@@ -1,20 +1,26 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import Producto from "./producto";
+import { useCart } from "../context/cartContext";
 
+export default function ListaProductos({ categoria }) {
+  const { products, addToCart } = useCart();
+  const filtrados = categoria
+    ? products.filter((p) => p.category === categoria)
+    : products;
 
-export default function ListaProductos({ productos, addToCarrito }) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.titulo}>🍴 Menú de Productos</Text>
 
       <View style={styles.grid}>
-        {productos.map((p) => (
-          <Producto key={p.id} producto={p} addToCarrito={addToCarrito} />
+        {filtrados.map((p) => (
+          <Producto key={p.id} producto={p} addToCarrito={addToCart} />
         ))}
       </View>
     </ScrollView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
