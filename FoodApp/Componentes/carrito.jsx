@@ -1,8 +1,12 @@
 import { Text, StyleSheet, View, Pressable } from "react-native";
 
-
-export default function Carrito({ carrito, removeFromCarrito }) {
-  const total = carrito.reduce((a, i) => a + i.price * i.q, 0);
+export default function Carrito({ carrito = [], removeFromCarrito, total }) {
+  const computedTotal =
+    total ??
+    carrito.reduce(
+      (a, i) => a + (i.lineTotal ?? (i.price || 0) * (i.qty || 0)),
+      0
+    );
 
   return (
     <View style={styles.carrito}>
@@ -14,22 +18,25 @@ export default function Carrito({ carrito, removeFromCarrito }) {
           carrito.map((item) => (
             <View key={item.id} style={styles.cartItems}>
               <Text style={styles.span}>
-                {item.emoji} {item.name}   x {item.q} {/* No se pq no funciona el item.emoji */}
+                {item.emoji ?? "🧺"} {item.name} x {item.qty}
               </Text>
               <Pressable
                 style={styles.remove}
                 onPress={() => removeFromCarrito(item.id)}
               >
-                <Text>${item.price * item.q}   ❌</Text>
+                <Text style={styles.priceText}>
+                  ${item.lineTotal ?? (item.price || 0) * (item.qty || 0)} ❌
+                </Text>
               </Pressable>
             </View>
           ))
         )}
       </View>
-      <Text style={styles.h3}>Total: ${total}</Text>
+      <Text style={styles.h3}>Total: ${computedTotal}</Text>
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   h2: {
