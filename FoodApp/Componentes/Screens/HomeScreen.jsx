@@ -1,19 +1,36 @@
 import { View, ScrollView, Button, Text, StyleSheet } from "react-native";
+import { useLayoutEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 import ListaProductos from "../listaproducto";
 import Boton from "../boton";
 import { useCart } from "../../context/cartContext";
 
 export default function HomeScreen() {
-  const { products, addToCart } = useCart(); 
+  const { products, addToCart, userName } = useCart();
+  const navigation = useNavigation();
+
+  useLayoutEffect(() => {
+    if (userName) {
+      navigation.setOptions({
+        title: `FoodApp`,
+      });
+    }
+  }, [navigation, userName]);
 
   return (
     <View style={styles.screen}>
+      <Text style={styles.userName}>
+        Bienvenido, {userName || "Invitado"} 👋
+      </Text>
+
       <Text style={styles.h1}>🍴 Menú de Productos</Text>
+
       <View style={styles.card}>
         <ScrollView contentContainerStyle={styles.listContent}>
           <ListaProductos productos={products} addToCarrito={addToCart} />
         </ScrollView>
       </View>
+
       <View style={styles.cta}>
         <Button title="AGREGAR NUEVA COMIDA" onPress={() => setBoton(true)} />
       </View>
@@ -24,7 +41,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "#111",      
+    backgroundColor: "#111",
     padding: 16,
   },
   h1: {
@@ -50,5 +67,10 @@ const styles = StyleSheet.create({
   },
   cta: {
     marginTop: 12,
+  },
+  userName: {
+    color: "#fff",
+    fontSize: 18,
+    textAlign: "center",
   },
 });

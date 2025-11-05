@@ -4,7 +4,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import HomeScreen from "./Componentes/Screens/HomeScreen.jsx";
 import CartScreen from "./Componentes/Screens/CartScreen.jsx";
-import { CartProvider } from "./context/cartContext";  // ← contexto
+import Landing from "./Componentes/Screens/LandingScreen.jsx";
+import { CartProvider } from "./context/cartContext"; // ← contexto
 
 const Stack = createNativeStackNavigator();
 const PRIMARY = "#1E88E5";
@@ -13,12 +14,18 @@ export default function App() {
   return (
     <CartProvider>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="Landing">
+          <Stack.Screen
+            name="Landing"
+            component={Landing}
+            options={{ headerShown: false }}
+          />
+
           <Stack.Screen
             name="Home"
-            component={HomeScreen}                 
+            component={HomeScreen}
             options={({ navigation }) => ({
-              title: "Home",
+              title: "FoodApp",
               headerStyle: { backgroundColor: PRIMARY },
               headerTintColor: "#fff",
               headerTitleStyle: { fontWeight: "bold", color: "#fff" },
@@ -36,7 +43,7 @@ export default function App() {
 
           <Stack.Screen
             name="Cart"
-            component={CartScreen}                 // ← sin props
+            component={CartScreen} // ← sin props
             options={{ title: "Carrito" }}
           />
         </Stack.Navigator>
