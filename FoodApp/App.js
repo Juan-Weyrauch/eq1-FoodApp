@@ -1,20 +1,52 @@
-import { StyleSheet, TouchableOpacity, Text } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, TouchableOpacity, Text, ActivityIndicator, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { CartProvider } from "./context/cartContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import HomeScreen from "./Componentes/Screens/HomeScreen.jsx";
 import CartScreen from "./Componentes/Screens/CartScreen.jsx";
 import Landing from "./Componentes/Screens/LandingScreen.jsx";
+import { CartProvider } from "./context/cartContext";
 
 const Stack = createNativeStackNavigator();
 const PRIMARY = "#1E88E5";
 
 export default function App() {
+  const [initialRoute, setInitialRoute] = useState(null); // null -> still loading
+
+  useEffect(() => {
+    const checkStoredUser = async () => {
+      try {
+        const storedName = await AsyncStorage.getItem("name");
+        if (storedName) {
+          setInitialRoute("Home");
+        } else {
+          setInitialRoute("Landing");
+        }
+      } catch (err) {
+        console.error("Error reading storage:", err);
+        setInitialRoute("Landing");
+      }
+    };
+
+    checkStoredUser();
+  }, []);
+
+  // Show a loading screen while checking storage
+  if (initialRoute === null) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={PRIMARY} />
+        <Text style={{ color: PRIMARY, marginTop: 8 }}>Cargando...</Text>
+      </View>
+    );
+  }
+
   return (
     <CartProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Landing">
+        <Stack.Navigator initialRouteName={initialRoute}>
           <Stack.Screen
             name="Landing"
             component={Landing}
@@ -51,6 +83,11 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   cartBtn: {
     backgroundColor: "#fff",
     paddingHorizontal: 10,

@@ -1,5 +1,5 @@
 import { Text, TextInput, StyleSheet, View, Button } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCart } from "../../context/cartContext";
 import { useNavigation } from "@react-navigation/native";
 
@@ -9,6 +9,12 @@ export default function LandingScreen() {
   const navigation = useNavigation();
   const [inputValue, setInputValue] = useState("");
   const { setUserName } = useCart();
+  
+
+  useEffect(() => {
+    // storing input name
+    localStorage.setItem("name", JSON.stringify(inputValue));
+  }, [inputValue]);
 
   const handleSubmit = () => {
     if (inputValue.trim() !== "") {
@@ -17,7 +23,7 @@ export default function LandingScreen() {
     }
   };
 
-  return ( // 👈 THIS was missing
+  return (
     <View style={styles.container}>
       <Text style={styles.label}>Bienvenido a FoodApp</Text>
       <Text style={styles.formsText}>Por favor, ingrese su nombre:</Text>
